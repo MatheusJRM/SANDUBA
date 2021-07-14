@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, TextInput } from 'react-native';
+import { postProdutos } from '../../data/produto_db'
+import { putProdutos } from '../../data/produto_db';
 
-export default function Forms({navigation}) {
+
+
+export default function Forms({ navigation }) {
+  const [id, setID] = useState('');
   const [nome, setNome] = useState('');
   const [descricao, setDescricao] = useState('');
+  const [preco, setPreco] = useState(0);
+
+  function salvarProduto() {
+    postProdutos(nome, descricao, preco);
+  }
+
+  function atualizarProduto() {
+    putProdutos(id,nome,descricao,preco);
+  }
 
   return (
     <View style={styles.inputs}>
@@ -12,17 +26,66 @@ export default function Forms({navigation}) {
         placeholder="Nome"
         autoCorrect={false}
         onChangeText={nome => setNome(nome)}
+      //value={nome}
       />
       <TextInput
         style={styles.input}
         placeholder="Descricao"
         autoCorrect={false}
         onChangeText={descricao => setDescricao(descricao)}
+      //value={descricao}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Preco"
+        autoCorrect={false}
+        onChangeText={preco =>setPreco (parseFloat(preco))}
+        keyboardType="numeric"
+      //value={preco.number}
       />
 
-      <TouchableOpacity style={styles.botao}>
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={salvarProduto}>
         <Text style={styles.textoBotao}>Cadastrar</Text>
       </TouchableOpacity>
+
+      <TextInput
+        style={styles.input}
+        placeholder="ID"
+        autoCorrect={false}
+        onChangeText={id => setID(id)}
+      //value={nome}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Nome"
+        autoCorrect={false}
+        onChangeText={nome => setNome(nome)}
+      //value={nome}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Descricao"
+        autoCorrect={false}
+        onChangeText={descricao => setDescricao(descricao)}
+      //value={descricao}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Preco"
+        autoCorrect={false}
+        onChangeText={preco =>setPreco (parseFloat(preco))}
+        keyboardType="numeric"
+      //value={preco.number}
+      />
+
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={atualizarProduto}>
+        <Text style={styles.textoBotao}>Atualizar</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity
         style={styles.btn}
         onPress={() => navigation.navigate("Home")}>
